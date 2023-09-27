@@ -2,7 +2,7 @@ const express = require('express');
 const Joi = require('joi');
 const Validator = require('express-joi-validation').createValidator({});
 const router  = express.Router();
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
 
 const User = require('../../models/auth/user');
@@ -13,23 +13,25 @@ const regValid = Joi.object({
     mail: Joi.string().min(3).required(),
     password: Joi.string().min(3).required(),
     phone: Joi.string().max(13),
+    name: Joi.string(),
+    address:Joi.string(),
 })
 
 router.post('/reg',Validator.body(regValid), async (req,res)=>{
 
    try {
     
-    const {name,phone,address,username,mail,password} = await req.body;
-    const userExits = await User.findOne({mail:mail});
+    const {name,phone,address,username,mail,password} = req.body;
+    const userExits = await User.findOne({mail:mail.toLowerCase()});
      
     if (userExits) {
-        res.send(400).send("User already exits");
+        res.status(400).send("User already exits");
     }
 
-    const securePASS = bcrypt.hash(password,15);
+    const securePASS = await bcrypt.hash(password,10);
 
     const user = await User.create({
-        name, phone, address,
+        name, phone, address,username,
         mail: mail.toLowerCase(),
         password:securePASS
     });

@@ -1,8 +1,8 @@
 const express = require('express');
 const Joi = require('joi');
 const Validator = require('express-joi-validation').createValidator({});
-const user = require('../../models/auth/user');
-const bcrypt = require('bcrypt-nodejs');
+const User = require('../../models/auth/user');
+const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
 
 const router  = express.Router();
@@ -16,18 +16,18 @@ const logValid = Joi.object({
 router.post('/log',Validator.body(logValid), async(req,res)=>{
 
     try{
-    const {username,password} = await req.body;
+    const {username,password} = req.body;
 
-    const user = await user.findOne({username:username});
+    const userExits = await User.findOne({username:username});
 
-    if(user && bcrypt.compare(password,user.password)){
+    if(userExits && bcrypt.compare(password,userExits.password)){
         const token = 'JWT';
 
         res.status(200).json({
             userDetails:{
-               username:user.username,
-               mail:user.mail,
-               password:user.password,
+               username:userExits.username,
+               mail:userExits.mail,
+               password:userExits.password,
                token:token
             }
         })
