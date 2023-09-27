@@ -18,15 +18,17 @@ router.post('/log',Validator.body(logValid), async(req,res)=>{
     try{
     const {username,password} = await req.body;
 
-    const user = user.findOne({username:username});
+    const user = await user.findOne({username:username});
 
-    if(user){
+    if(user && bcrypt.compare(password,user.password)){
+        const token = 'JWT';
+
         res.status(200).json({
             userDetails:{
                username:user.username,
                mail:user.mail,
                password:user.password,
-               token:user.token
+               token:token
             }
         })
     }
