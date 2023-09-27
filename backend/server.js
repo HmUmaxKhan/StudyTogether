@@ -26,9 +26,7 @@ const PORT = process.env.API_PORT;
 
 // Using routes
 app.use('/api/auth', login) //Login
-app.use('/api/auth', register);
-
-// Routes
+app.use('/api/auth', register);//Register
 
 
 
