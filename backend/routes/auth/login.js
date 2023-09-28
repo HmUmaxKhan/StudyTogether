@@ -4,6 +4,7 @@ const Validator = require('express-joi-validation').createValidator({});
 const User = require('../../models/auth/user');
 const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
+const auth = require('../../middlewares/auth')
 require("dotenv").config();
 
 const router  = express.Router();
@@ -50,6 +51,10 @@ router.post('/log',Validator.body(logValid), async(req,res)=>{
   catch(err){
     res.status(502).send("Something went wrong");
   }
+})
+
+router.get("/test",auth,(req,res)=>{
+    res.send("Request passed");
 })
 
 module.exports = router;
