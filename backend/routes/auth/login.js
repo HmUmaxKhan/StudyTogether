@@ -4,6 +4,7 @@ const Validator = require('express-joi-validation').createValidator({});
 const User = require('../../models/auth/user');
 const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
+require("dotenv").config();
 
 const router  = express.Router();
 
@@ -21,7 +22,17 @@ router.post('/log',Validator.body(logValid), async(req,res)=>{
     const userExits = await User.findOne({username:username});
 
     if(userExits && bcrypt.compare(password,userExits.password)){
-        const token = 'JWT';
+
+        const token = JWT.sign(
+            {
+                id : userExits.id,
+                mail: userExits.mail,
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn:'24h',
+            }
+        )
 
         res.status(200).json({
             userDetails:{

@@ -4,6 +4,7 @@ const Validator = require('express-joi-validation').createValidator({});
 const router  = express.Router();
 const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
+require("dotenv").config();
 
 const User = require('../../models/auth/user');
 
@@ -36,7 +37,16 @@ router.post('/reg',Validator.body(regValid), async (req,res)=>{
         password:securePASS
     });
 
-    const token = 'JWT TOKEN';
+    const token = JWT.sign(
+        {
+            id : user.id,
+            mail: user.mail,
+        },
+        process.env.JWT_SECRET,
+        {
+            expiresIn:'24h',
+        }
+    );
 
     res.status(200).json({
         userDetails:{
@@ -45,10 +55,10 @@ router.post('/reg',Validator.body(regValid), async (req,res)=>{
             token: token,
             password:user.password,
         }
-    })
+    });
 
    } catch (error) {
-    res.status(500).send("Something went wrong");
+    res.status(502).send("Something went wrong");
    }
 
 })
