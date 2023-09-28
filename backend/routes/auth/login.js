@@ -1,3 +1,4 @@
+/* The code is importing necessary modules and dependencies for the JavaScript file. */
 const express = require('express');
 const Joi = require('joi');
 const Validator = require('express-joi-validation').createValidator({});
@@ -10,14 +11,21 @@ require("dotenv").config();
 const router  = express.Router();
 
 
+/* The code `const logValid = Joi.object({ ... })` is defining a validation schema using the Joi
+library. */
 const logValid = Joi.object({
     username: Joi.string().min(3).max(20).required(),
     password: Joi.string().min(3).required(),
 })
 
+/* The code `router.post('/log',Validator.body(logValid), async(req,res)=>{` is defining a POST route
+handler for the '/log' endpoint. */
 router.post('/log',Validator.body(logValid), async(req,res)=>{
 
     try{
+   /* This code block is handling the logic for user authentication and generating a JSON Web Token
+   (JWT) for the authenticated user. */
+
     const {username,password} = req.body;
 
     const userExits = await User.findOne({username:username});
@@ -53,6 +61,10 @@ router.post('/log',Validator.body(logValid), async(req,res)=>{
   }
 })
 
+/* The code `router.get("/test",auth,(req,res)=>{ res.send("Request passed"); })` is defining a GET
+route handler for the '/test' endpoint. This route is protected by the `auth` middleware, which
+means that the user must be authenticated in order to access this endpoint. If the user is
+authenticated, the server will respond with the message "Request passed". */
 router.get("/test",auth,(req,res)=>{
     res.send("Request passed");
 })
