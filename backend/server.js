@@ -12,6 +12,12 @@ const { log } = require('console');
 // Secret file for db connection and all other things
 require('dotenv').config();
 
+
+/* The line `const socket = require("./socketServer");` is importing the `socketServer` module and
+assigning it to the variable `socket`. This module likely contains code related to setting up and
+managing socket connections for real-time communication between the server and clients. */
+const socket = require("./socketServer");
+
 // using app as express function
 const app = express();
 
@@ -33,6 +39,8 @@ app.use('/api/auth', register);//Register
 // using http 
 const server = http.createServer(app);
 
+// Calling the function with argument "server"
+socket.registerSocket(server);
 
 // connecting with mongoDB Altas
 
