@@ -5,8 +5,15 @@ const cors = require('cors');
 const http = require('http');
 const mongoose = require('mongoose');
 
+// Login Route File
 const login = require('./routes/auth/login');
+
+//Registration Route File
 const register = require('./routes/auth/register');
+
+//Friend Invitation Route File
+const friendInvitation = require("./routes/Invitation/friendInvitation");
+
 const { log } = require('console');
 
 // Secret file for db connection and all other things
@@ -33,6 +40,7 @@ const PORT = process.env.API_PORT;
 // Using routes
 app.use('/api/auth', login) //Login
 app.use('/api/auth', register);//Register
+app.use('/api/invite', friendInvitation)//Invite Friend
 
 
 
@@ -44,7 +52,7 @@ socket.registerSocket(server);
 
 // connecting with mongoDB Altas
 
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect(process.env.LOCAL_MONGO)
 .then(server.listen(PORT,(req,res)=>{
     console.log("Listening on port "+PORT);
     console.log("Database is Connected");
