@@ -52,7 +52,7 @@ socket.registerSocket(server);
 
 // connecting with mongoDB Altas
 
-mongoose.connect(process.env.LOCAL_MONGO)
+mongoose.connect(process.env.MONGO_URL)
 .then(server.listen(PORT,(req,res)=>{
     console.log("Listening on port "+PORT);
     console.log("Database is Connected");

@@ -11,7 +11,8 @@ const UserSchema = new mongoose.Schema({
     password:{type:String, require:true}, 
     name:{type:String, require:true}, 
     phone:{type:String, require:true}, 
-    address:{type:String, require:true},  
+    address:{type:String, require:true}, 
+    friends : [{type:Schema.Types.ObjectId, ref:'invitation'}], 
 });
 
 /* `const user = mongoose.model('user',UserSchema);` is creating a Mongoose model based on the

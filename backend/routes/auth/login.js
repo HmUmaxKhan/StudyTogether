@@ -45,6 +45,7 @@ router.post('/log',Validator.body(logValid), async(req,res)=>{
 
         res.status(200).json({
             userDetails:{
+                _id: userExits._id,
                username:userExits.username,
                mail:userExits.mail,
                password:userExits.password,

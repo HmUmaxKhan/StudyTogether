@@ -3,7 +3,8 @@ const express = require('express');
 const Joi = require('joi');
 const Validator = require('express-joi-validation').createValidator({});
 const User = require('../../models/auth/user');
-const auth = require('../../middlewares/auth')
+const Invitation = require("../../models/InvitationModal/Invitation");
+const auth = require('../../middlewares/auth');
 
 const router  = express.Router();
 
@@ -27,7 +28,7 @@ async (req,res)=>{
 
         // Check if the user which is invited is not exit.
         
-        const targetUser = User.findOne({
+        const targetUser = await User.findOne({
             mail:targetMailAddress,
         });
 
@@ -43,10 +44,41 @@ async (req,res)=>{
             send("You can't be your own friend!");
         }
 
+        // Check if the user has already sent the request 
         
+        const AlreadySent = await Invitation.findOne({
+            sednerID: userId,
+            receiverID: targetUser._id,
+        })
+
+        if (AlreadySent) {
+            res.status(409).
+            send("Request is already sent");
+        }
+
+        // Check if the user is already friend
+
+        const AlreadyFriend = await User.friends.find((friendsId)=>
+            friendsId.toString() === userId.toString(),
+        )
+
+        if (AlreadyFriend) {
+            res.status(409).
+            send("User Aready in your friend list")
+        }
+
+        // Adding into the database
+
+        const InvitationReq = await Invitation.create({
+            sednerID:userId,
+            receiverID:targetUser._id,
+        });
+
         
     } catch (error) {
         res.status(500)
         .send("There is custom error", error);
     }
 })
+
+module.exports = router;

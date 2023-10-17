@@ -61,6 +61,7 @@ router.post('/reg',Validator.body(regValid), async (req,res)=>{
 
     res.status(200).json({
         userDetails:{
+            _id: user._id,
             name: user.name,
             mail: user.mail,
             token: token,
