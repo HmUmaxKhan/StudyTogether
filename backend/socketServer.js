@@ -1,6 +1,7 @@
 const { socketHandler } = require("./SocketHandler/socketHandler");
 const { socketAuth } = require("./middlewares/socketAuth");
 const removeHandler = require ("./SocketHandler/removeHandler");
+const storeSocket = require("./storeSocket/storeSocket");
 
 const registerSocket= (server)=>{
     const io = require("socket.io")(server,{
@@ -11,6 +12,8 @@ const registerSocket= (server)=>{
         }
     });
 
+      storeSocket.setSocketServerInstance(io);
+  
     io.use((socket,io)=>{
         socketAuth(socket,io);
     })

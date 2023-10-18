@@ -9,7 +9,7 @@ const InvitationSchema = new mongoose.Schema({
 
     sednerID:{type: Schema.Types.ObjectId, ref:'user'}, //Sender id
 
-    receiverID:{type: Schema.Types.ObjectId, ref:'user'} // Receiver id
+    receiverID:{type: Schema.Types.ObjectId, ref:'user'}, // Receiver id
 });
 
 const invitation = mongoose.model('invitation',InvitationSchema);

@@ -5,22 +5,23 @@ const Validator = require('express-joi-validation').createValidator({});
 const User = require('../../models/auth/user');
 const Invitation = require("../../models/InvitationModal/Invitation");
 const auth = require('../../middlewares/auth');
+const friends = require("../../SocketHandler/update/friends");
 
 const router  = express.Router();
 
 
 //Validator
 
-const friendInvitationValidator = Joi.object({
-    targetMailAddress : Joi.string().email(),
-});
+// const friendInvitationValidator = Joi.object({
+//     targetMailAddress : Joi.string().email(),
+// });
 
 
 // Making Route for friend Invitation
 
-router.post("/friendinvite",auth,Validator.body(friendInvitationValidator),
+router.post("/friendinvite",auth,
 async (req,res)=>{
-    const targetMailAddress = req.body;
+    const targetMailAddress = req.body.mail;
 
     const {userId, mail} = req.user;
 
@@ -28,6 +29,7 @@ async (req,res)=>{
 
         // Check if the user which is invited is not exit.
         
+
         const targetUser = await User.findOne({
             mail:targetMailAddress,
         });
@@ -56,16 +58,13 @@ async (req,res)=>{
             send("Request is already sent");
         }
 
-        // Check if the user is already friend
+        // // Check if the user is already friend
 
-        const AlreadyFriend = await User.friends.find((friendsId)=>
-            friendsId.toString() === userId.toString(),
-        )
+        // const AlreadyFriend = await User.friends.includes(userId);
 
-        if (AlreadyFriend) {
-            res.status(409).
-            send("User Aready in your friend list")
-        }
+        // if (AlreadyFriend) {
+        // res.status(409).send("User already in your friend list");
+        // }
 
         // Adding into the database
 
@@ -74,10 +73,20 @@ async (req,res)=>{
             receiverID:targetUser._id,
         });
 
+        res.status(201).
+        send("Request is completed");
+
+
+        //  sending invitations to specific user
+
+        friends.friendPendingInvitation(targetUser._id.toString());
+
+        
         
     } catch (error) {
         res.status(500)
-        .send("There is custom error", error);
+        .send("There is custom error");
+        console.log(error);
     }
 })
 
