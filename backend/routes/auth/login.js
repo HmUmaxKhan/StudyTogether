@@ -27,8 +27,11 @@ router.post('/log',Validator.body(logValid), async(req,res)=>{
    (JWT) for the authenticated user. */
 
     const {username,password} = req.body;
+    console.log(username+"  "+password);
 
     const userExits = await User.findOne({username:username});
+
+    console.log(userExits);
 
     if(userExits && bcrypt.compare(password,userExits.password)){
 

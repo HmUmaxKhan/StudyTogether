@@ -32,6 +32,7 @@ router.post('/reg',Validator.body(regValid), async (req,res)=>{
     `password` from the `req.body` object. */
     const {name,phone,address,username,mail,password} = req.body;
     const userExits = await User.findOne({mail:mail.toLowerCase()});
+    console.log(name+" "+mail+" "+username+" "+address);
      
     if (userExits) {
         res.status(400).send("User already exits");
@@ -45,6 +46,8 @@ router.post('/reg',Validator.body(regValid), async (req,res)=>{
         mail: mail.toLowerCase(),
         password:securePASS
     });
+
+    console.log(user);
 
     /* The code `const token = JWT.sign({...}, process.env.JWT_SECRET, {...});` is generating a JSON
     Web Token (JWT) for the user. */
