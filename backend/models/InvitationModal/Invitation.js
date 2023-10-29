@@ -7,7 +7,7 @@ address. Each field has a specified data type and may have additional requiremen
 required and unique. */
 const InvitationSchema = new mongoose.Schema({
 
-    sednerID:{type: Schema.Types.ObjectId, ref:'user'}, //Sender id
+    senderID:{type: Schema.Types.ObjectId, ref:'user'}, //Sender id
 
     receiverID:{type: Schema.Types.ObjectId, ref:'user'}, // Receiver id
 });

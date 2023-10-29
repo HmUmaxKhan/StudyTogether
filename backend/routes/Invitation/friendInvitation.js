@@ -58,8 +58,6 @@ async (req,res)=>{
             send("Request is already sent");
         }
 
-        // // Check if the user is already friend
-
         // const AlreadyFriend = await User.friends.includes(userId);
 
         // if (AlreadyFriend) {

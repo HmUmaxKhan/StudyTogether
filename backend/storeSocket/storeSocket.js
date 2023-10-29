@@ -25,13 +25,16 @@ const removeConnection = (socketId) =>{
 
     if (connectedUser.has(socketId)) {
         connectedUser.delete(socketId);  // delete the socket from map 
-        console.log("disconnected user");  
+        console.log("disconnected user");
     }
+    console.log(connectedUser);
 };
 
 // Adding online users in an array
 
 const onlineUsersArray =(userId)=>{
+    console.log(userId);
+
     let onlineUsers = [];
 
     connectedUser.forEach((value,key)=>{
@@ -39,6 +42,8 @@ const onlineUsersArray =(userId)=>{
             onlineUsers.push(key);
         }
     })
+
+    return onlineUsers;
 }
 
 module.exports = {

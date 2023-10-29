@@ -3,10 +3,12 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 function Login() {
 
 
+  const dispatch = useDispatch();
   const [login, setLogin] = useState({
     username:"",
     password:""
@@ -35,8 +37,9 @@ function Login() {
     console.log(response);
 
     if (response) {
-      localStorage.setItem("login",response.token)
-      window.location.href="/";
+      
+      localStorage.setItem("login", JSON.stringify(response))
+      window.location.href="/dashboard";
       
     }
   }

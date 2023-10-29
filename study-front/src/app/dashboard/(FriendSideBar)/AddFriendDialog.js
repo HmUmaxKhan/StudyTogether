@@ -17,13 +17,31 @@ const AddFriendDialog = ({
   const [mail, setMail] = useState("");
 
 
-  const handleSendInvitation = () => {
-    sendFriendInvitation(
-      {
-        targetMailAddress: mail,
+  const handleSendInvitation = async() => {
+    let token = localStorage.getItem("login");
+    token = JSON.parse(token);
+    token = token.userDetails.token
+
+    let response = await fetch("http://localhost:5002/api/invite/friendinvite",{
+      method:"post",
+      headers:{
+        "Content-Type":"application/json",
+        "authtoken":token
       },
-      handleCloseDialog
-    );
+      body:JSON.stringify({
+        mail:mail
+      })
+    });
+
+    try {
+      response = await response.text();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+      
+      handleCloseDialog();
+    
   };
 
   const handleCloseDialog = () => {

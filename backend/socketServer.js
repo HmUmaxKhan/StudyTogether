@@ -14,8 +14,8 @@ const registerSocket= (server)=>{
 
       storeSocket.setSocketServerInstance(io);
   
-    io.use((socket,io)=>{
-        socketAuth(socket,io);
+    io.use((socket,next)=>{
+        socketAuth(socket,next);
     })
 
     io.on("connection",(socket=>{

@@ -8,20 +8,37 @@ const friendPendingInvitation = async(userId)=>{
     
     try {
         const friendInvitationsDetails = await Invitation.find({
-            receiverID:userId,
-        }).populate("senderID","_id username mail");
+            receiverID: userId
+        });
+
+
+        friendInvitationsDetails.forEach((friendInvitation) => {
+            friendInvitation.populate("senderID", "_id username mail").execPopulate();
+          });
+
+        console.log("After: ",friendInvitationsDetails);
+
+        
         
         // Getting online users array for specific user
 
         let receiverList = storeSocket.onlineUsersArray(userId);
 
-        const io = storeSocket.getSocketServerInstance();
+        console.log(receiverList);
 
-        receiverList.forEach(receiverSocketId => {
-            io.to(receiverSocketId).emit("friends-invitations", {
-                friendInvitationsDetails:friendInvitationsDetails ? friendInvitationsDetails : [],
-            })
+       
+    if (receiverList && Array.isArray(receiverList)) { // Check if receiverList is defined and an array
+        const io = storeSocket.getSocketServerInstance();
+  
+        receiverList.forEach((receiverSocketId) => {
+          io.to(receiverSocketId).emit("friends-invitations", {
+            friendInvitationsDetails: friendInvitationsDetails ? friendInvitationsDetails : [],
+          });
         });
+      } else {
+        console.error("Receiver list is not defined or not an array.");
+        // Handle the error or edge case appropriately
+      }
 
 
     } catch (error) {
