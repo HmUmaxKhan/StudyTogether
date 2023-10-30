@@ -9,14 +9,7 @@ const friendPendingInvitation = async(userId)=>{
     try {
         const friendInvitationsDetails = await Invitation.find({
             receiverID: userId
-        });
-
-
-        friendInvitationsDetails.forEach((friendInvitation) => {
-            friendInvitation.populate("senderID", "_id username mail").execPopulate();
-          });
-
-        console.log("After: ",friendInvitationsDetails);
+        }).populate("senderID","_id username mail");
 
         
         
@@ -24,7 +17,7 @@ const friendPendingInvitation = async(userId)=>{
 
         let receiverList = storeSocket.onlineUsersArray(userId);
 
-        console.log(receiverList);
+        console.log("Receiver List:",receiverList);
 
        
     if (receiverList && Array.isArray(receiverList)) { // Check if receiverList is defined and an array
@@ -32,7 +25,7 @@ const friendPendingInvitation = async(userId)=>{
   
         receiverList.forEach((receiverSocketId) => {
           io.to(receiverSocketId).emit("friends-invitations", {
-            friendInvitationsDetails: friendInvitationsDetails ? friendInvitationsDetails : [],
+            friendInvitationsDetails: friendInvitationsDetails,
           });
         });
       } else {

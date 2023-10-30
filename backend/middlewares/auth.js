@@ -32,6 +32,8 @@ const authToken = (req,res,next)=>{
 
     req.user = decoded;
 
+    console.log("auth :", req.user);
+
    next();
         
     } catch (err) {

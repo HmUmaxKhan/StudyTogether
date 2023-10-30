@@ -2,7 +2,6 @@ const { createSlice } = require("@reduxjs/toolkit/dist");
 
 const initialState = {
     sentInvitations:[],
-    pendingFriends:[],
     onlneUsers:[]
 }
 const FriendsSlice = createSlice({
@@ -18,15 +17,6 @@ const FriendsSlice = createSlice({
             console.log("FriendsInvitations data: ",data);
             state.sentInvitations.push(data);
        },
-
-       SetPendingInvitations:(state,action)=>{
-        console.log("pendingInvitations: ",action);
-        let data={
-            pendingFriends:action.payload
-        }
-        console.log("pendingInvitations data: ",data);
-            state.pendingFriends.push(data);
-       },
        
        SetOnlineUsers:(state,action)=>{
 
@@ -35,5 +25,4 @@ const FriendsSlice = createSlice({
 })
 
 export const { SetFriends } = FriendsSlice.actions;
-export const { SetPendingInvitations } = FriendsSlice.actions;
 export default FriendsSlice.reducer

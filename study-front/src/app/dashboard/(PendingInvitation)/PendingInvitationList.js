@@ -1,31 +1,11 @@
 
 import { styled } from "@mui/system";
 import PendingInvitationListItems from "../(PendingInvitation)/PendingInvitationListItems";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 
-const DUMMY_INVVITATIOS = [
-    {
-        _id:1,
-        senderId:{
-            username:"Ali",
-            mail:"ali@gmail.com"
-        }
-    },
-    {
-        _id:3,
-        senderId:{
-            username:"Umar",
-            mail:"umr@gmail.com"
-        }
-    },
-    {
-        _id:2,
-        senderId:{
-            username:"MOiz",
-            mail:"moiz@gmail.com"
-        }
-    },
-]
+
 const MainContainer = styled("div")({
   width: "100%",
   height: "22%",
@@ -36,16 +16,21 @@ const MainContainer = styled("div")({
 });
 
 const PendingInvitationsList = () => {
+
+  
+  const userData = useSelector((state)=>state.pending.pendingInvitations);
+  console.log("PendingList: " ,userData);
+
   return (
     <MainContainer>
-    {DUMMY_INVVITATIOS.map((invitation) => (
+    {userData.length!==0?userData.map((invitation) => (
       <PendingInvitationListItems
         key={invitation._id}
         id={invitation._id}
-        username={invitation.senderId.username}
-        mail={invitation.senderId.mail}
+        username={invitation.senderID ? invitation.senderID.username : ""}
+          mail={invitation.senderID ? invitation.senderID.mail : ""}
       />
-    ))}
+    )):""}
   </MainContainer>
   );
 };

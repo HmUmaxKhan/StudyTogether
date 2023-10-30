@@ -6,7 +6,7 @@ const User = require('../../models/auth/user');
 const Invitation = require("../../models/InvitationModal/Invitation");
 const auth = require('../../middlewares/auth');
 const friends = require("../../SocketHandler/update/friends");
-
+const authToken = require("../../middlewares/auth");
 const router  = express.Router();
 
 
@@ -19,11 +19,16 @@ const router  = express.Router();
 
 // Making Route for friend Invitation
 
-router.post("/friendinvite",auth,
+router.post("/friendinvite",authToken,
 async (req,res)=>{
     const targetMailAddress = req.body.mail;
 
-    const {userId, mail} = req.user;
+    const {id, mail} = req.user;
+
+    const userId = id;
+
+    console.log("userid: ", userId);
+    console.log("user mail: ", mail);
 
     try {
 
@@ -49,7 +54,7 @@ async (req,res)=>{
         // Check if the user has already sent the request 
         
         const AlreadySent = await Invitation.findOne({
-            sednerID: userId,
+            senderID: userId,
             receiverID: targetUser._id,
         })
 
@@ -67,12 +72,14 @@ async (req,res)=>{
         // Adding into the database
 
         const InvitationReq = await Invitation.create({
-            sednerID:userId,
+            senderID:userId,
             receiverID:targetUser._id,
         });
 
         res.status(201).
         send("Request is completed");
+
+        console.log(InvitationReq);
 
 
         //  sending invitations to specific user

@@ -4,11 +4,12 @@ require("dotenv").config();
 const socketAuth = (socket,next)=>{
     const token = socket.handshake.auth.token;
 
-    try {
+    console.log(token);
 
+    try {
         const decoded = jwt.verify(token,process.env.JWT_SECRET);
         socket.user = decoded;
-        console.log("socket User in Middleware",decoded);
+        next();
 
     } catch (error) {
         const err = new Error("Token Error");

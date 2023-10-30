@@ -12,11 +12,12 @@ const getSocketServerInstance = ()=>{
 }
 
 // Adding the online users
-
-const addConnection = ({socketId , userId}) =>{
-    connectedUser.set(socketId , {userId});
-    console.log("newConnected User");
-    console.log(connectedUser);
+const addConnection = ({ socketId, userId }) => {
+    if (!connectedUser.has(socketId)) {
+        connectedUser.set(socketId, { userId });
+        console.log("newConnected User");
+        console.log(connectedUser);
+    } 
 }
 
 // Offline Users
@@ -32,19 +33,18 @@ const removeConnection = (socketId) =>{
 
 // Adding online users in an array
 
-const onlineUsersArray =(userId)=>{
-    console.log(userId);
-
+const onlineUsersArray = (userId) => {
     let onlineUsers = [];
 
-    connectedUser.forEach((value,key)=>{
-        if(value.userId === userId){
+    connectedUser.forEach((value, key) => {
+        if (value.userId === userId && !onlineUsers.includes(key)) {
             onlineUsers.push(key);
         }
-    })
+    });
 
     return onlineUsers;
-}
+};
+
 
 module.exports = {
     addConnection,

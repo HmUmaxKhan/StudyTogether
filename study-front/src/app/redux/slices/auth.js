@@ -13,7 +13,7 @@ const AuthSlice = createSlice({
        authJWT : (state,action)=>{
          console.log(action);
           let data={
-             id:nanoid,
+             id:nanoid(),
              userDetails:action.payload,
           }
           console.log(data);
