@@ -11,13 +11,13 @@ const friendPendingInvitation = async(userId)=>{
             receiverID: userId
         }).populate("senderID","_id username mail");
 
+        console.log("Freind pEnding invitation:    " , userId);
+
         
         
         // Getting online users array for specific user
 
         let receiverList = storeSocket.onlineUsersArray(userId);
-
-        console.log("Receiver List:",receiverList);
 
        
     if (receiverList && Array.isArray(receiverList)) { // Check if receiverList is defined and an array

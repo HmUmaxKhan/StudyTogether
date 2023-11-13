@@ -14,6 +14,9 @@ const register = require('./routes/auth/register');
 //Friend Invitation Route File
 const friendInvitation = require("./routes/Invitation/friendInvitation");
 
+//Invitation rejection
+const rejectfrndreq = require("./routes/Decisionbutton/rejectfrnd");
+
 const { log } = require('console');
 
 // Secret file for db connection and all other things
@@ -41,6 +44,7 @@ const PORT = process.env.API_PORT;
 app.use('/api/auth', login) //Login
 app.use('/api/auth', register);//Register
 app.use('/api/invite', friendInvitation)//Invite Friend
+app.use("/api", rejectfrndreq);//Rejecting frnd req
 
 
 

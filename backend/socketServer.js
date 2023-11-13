@@ -20,7 +20,6 @@ const registerSocket= (server)=>{
 
     io.on("connection",(socket=>{
         console.log("Socket is Connected");
-        console.log(socket.id);
 
         socketHandler(socket,io);
 

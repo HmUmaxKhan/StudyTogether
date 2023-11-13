@@ -1,41 +1,27 @@
-import { useEffect,useState } from "react";
-import { useDispatch } from "react-redux";
+
 import io from "socket.io-client";
+import { setInvitations } from "../redux/slices/pendingFriends";
 
+export default function connectWithSocketio(userDetails,dispatch) {
 
+  let JWTtoken = userDetails.token
+    const socket = io("http://localhost:5002", {
+      auth: {
+        token: JWTtoken,
+      },
+    });
 
-export default function TutSocket(props){
-   
-    let dispatch = useDispatch();
-    const [message, setMessage] = useState("");
-    useEffect(() => {
-        setMessage(props.token);
-        console.log(message);
-        
-            const socket = io("http://localhost:5002", {
-                auth:{
-                token: message,
-                }
-              
-            });
-        
-            socket.on("connect", () => {
-              console.log("connected");
-              console.log(socket.id);
-            });
-        
-            socket.on("friends-invitations", (data) => {
-              console.log(data);
-              const { friendInvitationsDetails } = data;
-              console.log("FriendsInvitations :", friendInvitationsDetails);
-              dispatch(setInvitations(friendInvitationsDetails));
-            });
-      
+    socket.on("connect", () => {
+      console.log("connected");
+      console.log("Socket ID:", socket.id);
+    });
 
-
-    return () => {
-      socket.disconnect(); // Clean up the socket connection on unmounting
-    };
-  }, [])
-
+    socket.on("friends-invitations", (data) => {
+      console.log(data);
+      const { friendInvitationsDetails } = data;
+      console.log("FriendsInvitations:", friendInvitationsDetails);
+      dispatch(setInvitations(friendInvitationsDetails));
+    });
+ // Clean up the socket connection on unmounting
+    // Add props.token as a dependency // or return a placeholder element if necessary
 }

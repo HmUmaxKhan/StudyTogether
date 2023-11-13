@@ -37,8 +37,11 @@ const onlineUsersArray = (userId) => {
     let onlineUsers = [];
 
     connectedUser.forEach((value, key) => {
-        if (value.userId === userId && !onlineUsers.includes(key)) {
+
+        if (value.userId === userId){
+            if (!onlineUsers.includes(key)) {
             onlineUsers.push(key);
+            }
         }
     });
 

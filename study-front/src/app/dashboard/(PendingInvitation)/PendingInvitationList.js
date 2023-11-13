@@ -18,19 +18,33 @@ const MainContainer = styled("div")({
 const PendingInvitationsList = () => {
 
   
-  const userData = useSelector((state)=>state.pending.pendingInvitations);
+  let userData = useSelector((state)=>state.pending.pendingInvitations);
   console.log("PendingList: " ,userData);
+
+  let len = userData.length;
+
+  userData = userData[len-1];
+
+  if (Array.isArray(userData)) {
+    console.log("Yes it is array",userData); 
+  }
+
+  if (!userData || userData.length === 0) {
+    return null; // Or you can render a loading indicator or an appropriate component
+  }
+
+  const invitations = userData;
 
   return (
     <MainContainer>
-    {userData.length!==0?userData.map((invitation) => (
+    {invitations.map((invitation) => (
       <PendingInvitationListItems
         key={invitation._id}
         id={invitation._id}
         username={invitation.senderID ? invitation.senderID.username : ""}
           mail={invitation.senderID ? invitation.senderID.mail : ""}
       />
-    )):""}
+    ))}
   </MainContainer>
   );
 };

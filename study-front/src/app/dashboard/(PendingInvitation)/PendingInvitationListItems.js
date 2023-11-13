@@ -8,14 +8,68 @@ export default function  PendingInvitationListItems  ({
   id,
   username,
   mail,
-  acceptFriendInvitation = () => {},
-  rejectFriendInvitation = () => {},
+  acceptFriendInvitation = async (id) => {
+    let userDetails = localStorage.getItem("login");
+    if (!userDetails) {
+      window.location.href = "/login";
+    } else {
+      userDetails = JSON.parse(userDetails);
+      userDetails = userDetails.userDetails;
+
+      console.log(userDetails.token);
+ 
+    }
+
+    let response = await fetch("http://localhost:5002/api/acceptfrnd",{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'authtoken' : userDetails.token
+        },
+      body: JSON.stringify({
+          id : id
+      })
+    })
+
+    response = response.json();
+    console.log(response);
+
+  },
+  rejectFriendInvitation = async (id) => {
+
+    let userDetails = localStorage.getItem("login");
+    if (!userDetails) {
+      window.location.href = "/login";
+    } else {
+      userDetails = JSON.parse(userDetails);
+      userDetails = userDetails.userDetails;
+
+      console.log(userDetails.token);
+ 
+    }
+
+    let response = await fetch("http://localhost:5002/api/rejectfrnd",{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'authtoken' : userDetails.token
+        },
+      body: JSON.stringify({
+          id : id
+      })
+    })
+
+    response = response.json();
+    console.log(response);
+
+  },
 }) {
+  
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   const handleAcceptInvitation = () => {
     console.log(id);
-    acceptFriendInvitation({ id });
+    acceptFriendInvitation({ id })
     setButtonsDisabled(true);
   };
 
