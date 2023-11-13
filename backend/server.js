@@ -17,6 +17,9 @@ const friendInvitation = require("./routes/Invitation/friendInvitation");
 //Invitation rejection
 const rejectfrndreq = require("./routes/Decisionbutton/rejectfrnd");
 
+//Invitation Acception
+const acceptfrndreq = require("./routes/Decisionbutton/acceptfrnd");
+
 const { log } = require('console');
 
 // Secret file for db connection and all other things
@@ -45,6 +48,7 @@ app.use('/api/auth', login) //Login
 app.use('/api/auth', register);//Register
 app.use('/api/invite', friendInvitation)//Invite Friend
 app.use("/api", rejectfrndreq);//Rejecting frnd req
+app.use("/api", acceptfrndreq);//Accepting frnd req
 
 
 
