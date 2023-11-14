@@ -6,6 +6,7 @@ import PendingReducer from './slices/pendingFriends';
 export const store = configureStore({
     reducer:{
     auth: Authreducer,
-    pending:PendingReducer
+    pending:PendingReducer,
+    friends: Friendsreducer
     }
 })

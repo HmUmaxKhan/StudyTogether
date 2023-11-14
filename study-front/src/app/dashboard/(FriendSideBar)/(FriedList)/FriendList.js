@@ -1,35 +1,38 @@
 
 import { styled } from "@mui/system";
 import FriendsListItem from "./FriendListItems";
+import { useSelector } from "react-redux";
 
-const DUMMY_USERS = [
-    {
-        id:1,
-        username:"John Doe",
-        isOnline:true,
-    },
-    {
-        id:2,
-        username:"Johnny",
-        isOnline:true,
-    },
-    {
-        id:3,
-        username:"Johnson",
-        isOnline:true,
-    }
-    
-]
+
+
 const MainContainer = styled("div")({
   flexGrow: 1,
   width: "100%",
 });
 
 
-const FriendsList = ({ friends, onlineUsers }) => {
+const FriendsList = () => {
+
+  let userData = useSelector((state)=>state.friends.setfriends);
+  console.log("PendingList: " ,userData);
+
+  let len = userData.length;
+
+  userData = userData[len-1];
+
+  if (Array.isArray(userData)) {
+    console.log("Yes it is array",userData); 
+  }
+
+  if (!userData || userData.length === 0) {
+    return null; // Or you can render a loading indicator or an appropriate component
+  }
+
+  const totalFriends = userData;
+
   return (
     <MainContainer>
-    {DUMMY_USERS.map((f) => (
+    {totalFriends.map((f) => (
         <FriendsListItem
           username={f.username}
           id={f.id}

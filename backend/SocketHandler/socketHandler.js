@@ -1,5 +1,5 @@
 const storeSocket = require("../storeSocket/storeSocket");
-const { friendPendingInvitation } = require("./update/friends");
+const { friendPendingInvitation, updatefriendslist } = require("./update/friends");
 
 const socketHandler = (socket,io)=>{
     const userDetails = socket.user;
@@ -14,6 +14,8 @@ const socketHandler = (socket,io)=>{
     //update Pending Invitations if user 1st login
 
    friendPendingInvitation(userDetails.id)
+
+   updatefriendslist(userDetails.id)
 }
 
 module.exports = {
