@@ -5,7 +5,7 @@ const Validator = require('express-joi-validation').createValidator({});
 const User = require('../../models/auth/user');
 const authToken = require('../../middlewares/auth');
 const invitation = require('../../models/InvitationModal/Invitation');
-const { friendPendingInvitation } = require('../../SocketHandler/update/friends');
+const { friendPendingInvitation, updatefriendslist } = require('../../SocketHandler/update/friends');
 require("dotenv").config();
 
 const router  = express.Router();
@@ -57,8 +57,12 @@ router.post('/acceptfrnd',authToken,
     // Deleting the request
     await invitation.findByIdAndDelete(id);    
 
-    // MAKING NEW FRND REQ LIST
+    //Updating the friend list
+    updatefriendslist(senderID.toString());
+
+    // Updating FRND REQ LIST
     friendPendingInvitation(receiverID.toString());
+
     return res.status(200).json({Msg:"Friend Request is accepted"});
   }
   catch(err){

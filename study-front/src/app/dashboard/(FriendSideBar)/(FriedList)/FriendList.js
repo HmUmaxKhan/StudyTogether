@@ -1,7 +1,8 @@
 
 import { styled } from "@mui/system";
-import FriendsListItem from "./FriendListItems";
 import { useSelector } from "react-redux";
+import FriendsListItem from "./FriendListItems";
+
 
 
 
@@ -13,8 +14,8 @@ const MainContainer = styled("div")({
 
 const FriendsList = () => {
 
-  let userData = useSelector((state)=>state.friends.setfriends);
-  console.log("PendingList: " ,userData);
+  let userData = useSelector((state)=>state.friends.friendslist);
+  console.log("FriendsList: " ,userData);
 
   let len = userData.length;
 

@@ -30,10 +30,13 @@ router.post('/log',Validator.body(logValid), async(req,res)=>{
     
     const userExits = await User.findOne({username:username});
 
-   
+   console.log(password);
 
-    if(userExits && bcrypt.compare(password,userExits.password)){
+   let comparison = await bcrypt.compare(password,userExits.password);
+    if(userExits && comparison){
 
+        console.log(comparison);
+        // Generate token
         const token = JWT.sign(
             {
                 id : userExits.id,

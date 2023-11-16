@@ -11,10 +11,11 @@ const socketHandler = (socket,io)=>{
         userId:userDetails.id
     });
 
-    //update Pending Invitations if user 1st login
+    //update Pending Invitations if user is login
 
    friendPendingInvitation(userDetails.id)
 
+   //update the Friend lIst when user is online
    updatefriendslist(userDetails.id)
 }
 

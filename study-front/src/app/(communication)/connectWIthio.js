@@ -1,7 +1,8 @@
 
 import io from "socket.io-client";
 import { setInvitations } from "../redux/slices/pendingFriends";
-import { setFriends } from "../redux/slices/friendsSlice";
+import { setFriendsList } from "../redux/slices/friendsList";
+
 
 export default function connectWithSocketio(userDetails,dispatch) {
 
@@ -25,7 +26,8 @@ export default function connectWithSocketio(userDetails,dispatch) {
     socket.on("friends-lists", (data) => {
       const { friends } = data;
       console.log("connection with io : ",friends);
-      dispatch(setFriends(friends));
+
+      dispatch(setFriendsList(friends));
     });
 
 

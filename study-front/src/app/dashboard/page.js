@@ -36,7 +36,7 @@ function DashPage(props){
         connectWithSocketio(userDetails,dispatch);
    
       }
-    }, []); 
+    }, [dispatch]); 
     return (
         
         <Wraper>
