@@ -17,11 +17,13 @@ const MainContainer = styled("div")({
 
 const PendingInvitationsList = () => {
 
-  
+  // Getting the list of friend requests
   let userData = useSelector((state)=>state.pending.pendingInvitations);
 
+  //calculating the length
   let len = userData.length;
 
+  //getting the last array bcz it is lattest one
   userData = userData[len-1];
 
   
