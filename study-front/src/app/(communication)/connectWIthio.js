@@ -30,6 +30,10 @@ export default function connectWithSocketio(userDetails,dispatch) {
       dispatch(setFriendsList(friends));
     });
 
+    //Getting online users 
+    socket.on('online-users',function(data){
+      console.log("Online users");
+    })
 
  // Clean up the socket connection on unmounting
     // Add props.token as a dependency // or return a placeholder element if necessary

@@ -18,15 +18,27 @@ const registerSocket= (server)=>{
         socketAuth(socket,next);
     })
 
+    const emityOnlineUsers = ()=>{
+        const OnlineUsers = storeSocket.getOnlineUsers();
+
+        io.emit('online-users', {OnlineUsers});
+    }
+
     io.on("connection",(socket=>{
         console.log("Socket is Connected");
 
         socketHandler(socket,io);
 
+        emityOnlineUsers();
+
         socket.on("disconnect", ()=>{
             removeHandler(socket);
         })
     }))
+
+    setInterval(()=>{
+       emityOnlineUsers();
+    },[1000*10])
 }
 
 module.exports = {

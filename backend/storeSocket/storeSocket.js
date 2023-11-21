@@ -48,11 +48,23 @@ const onlineUsersArray = (userId) => {
     return onlineUsers;
 };
 
+// Getting online users 
+const getOnlineUsers = () =>{
+    const OnlineUsers = [];
+
+    connectedUser.forEach((value,key)=>{
+        OnlineUsers.push({socketId:key , userId:value.userId });
+    });
+
+    return OnlineUsers;
+
+}
 
 module.exports = {
     addConnection,
     removeConnection,
     onlineUsersArray,
     setSocketServerInstance,
-    getSocketServerInstance
+    getSocketServerInstance,
+    getOnlineUsers
 }
