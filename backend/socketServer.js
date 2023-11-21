@@ -29,6 +29,7 @@ const registerSocket= (server)=>{
 
         socketHandler(socket,io);
 
+        // Getting online users list when first the connection is made
         emityOnlineUsers();
 
         socket.on("disconnect", ()=>{
@@ -36,6 +37,7 @@ const registerSocket= (server)=>{
         })
     }))
 
+    // Setting the interval to get the online users list & is refreshing after every 10 seconds
     setInterval(()=>{
        emityOnlineUsers();
     },[1000*10])
