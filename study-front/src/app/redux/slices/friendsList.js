@@ -10,7 +10,7 @@ const FriendsListSlice = createSlice({
     initialState,
     reducers:{
        setFriendsList : (state,action)=>{
-         console.log("FriendsList new slice",action);
+      
           state.friendslist.push(action.payload);
        }
     }

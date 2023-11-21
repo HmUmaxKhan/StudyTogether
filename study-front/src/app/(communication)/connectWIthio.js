@@ -2,6 +2,7 @@
 import io from "socket.io-client";
 import { setInvitations } from "../redux/slices/pendingFriends";
 import { setFriendsList } from "../redux/slices/friendsList";
+import { addOnlineUser } from "../redux/slices/onlineusers";
 
 
 export default function connectWithSocketio(userDetails,dispatch) {
@@ -32,6 +33,11 @@ export default function connectWithSocketio(userDetails,dispatch) {
 
     //Getting online users 
     socket.on('online-users',function(data){
-      console.log("Online users");
+
+      const {OnlineUsers} = data;
+       
+      console.log("Online users:" , OnlineUsers);
+
+      dispatch(addOnlineUser(OnlineUsers));
     })
 }

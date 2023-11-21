@@ -15,15 +15,19 @@ const MainContainer = styled("div")({
 const FriendsList = () => {
 
   let userData = useSelector((state)=>state.friends.friendslist);
-  console.log("FriendsList: " ,userData);
+
+  let online = useSelector((state)=>state.onlinefrnds.onlineusers)
 
   let len = userData.length;
 
-  userData = userData[len-1];
+  let len1 = online.length;
 
-  if (Array.isArray(userData)) {
-    console.log("Yes it is array",userData); 
-  }
+  
+  userData = userData[len-1];
+  
+  online = online[len1-1];
+  
+  console.log("Online frnds: ", online);
 
   if (!userData || userData.length === 0) {
     return null; // Or you can render a loading indicator or an appropriate component
@@ -31,9 +35,21 @@ const FriendsList = () => {
 
   const totalFriends = userData;
 
+
+  const checkOnlineUser = (totalFriends = [], online = []) => {
+    return totalFriends.map((f) => {
+      const onlineUser = online.find((user) => user.userId === f.id);
+      return {
+        ...f, // Spread the existing properties of f
+        isOnline: onlineUser ? true : false,
+      };
+    });
+  };
+  
+
   return (
     <MainContainer>
-    {totalFriends.map((f) => (
+    {checkOnlineUser(totalFriends,online).map((f) => (
         <FriendsListItem
           username={f.username}
           id={f.id}

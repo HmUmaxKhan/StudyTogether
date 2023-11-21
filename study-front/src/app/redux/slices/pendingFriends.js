@@ -10,7 +10,6 @@ const PendingSlice = createSlice({
     initialState,
     reducers:{
        setInvitations : (state,action)=>{
-         console.log(action);
           state.pendingInvitations.push(action.payload);
        }
     }

@@ -32,7 +32,6 @@ export default function  PendingInvitationListItems  ({
     })
 
     response = response.json();
-    console.log(response);
 
   },
   rejectFriendInvitation = async (id) => {
@@ -43,8 +42,6 @@ export default function  PendingInvitationListItems  ({
     } else {
       userDetails = JSON.parse(userDetails);
       userDetails = userDetails.userDetails;
-
-      console.log(userDetails.token);
  
     }
 
@@ -60,7 +57,7 @@ export default function  PendingInvitationListItems  ({
     })
 
     response = response.json();
-    console.log(response);
+
 
   },
 }) {
@@ -68,13 +65,11 @@ export default function  PendingInvitationListItems  ({
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   const handleAcceptInvitation = () => {
-    console.log(id);
     acceptFriendInvitation({ id })
     setButtonsDisabled(true);
   };
 
   const handleRejectInvitation = () => {
-    console.log(id);
     rejectFriendInvitation({ id });
     setButtonsDisabled(true);
   };

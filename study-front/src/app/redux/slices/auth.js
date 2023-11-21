@@ -11,12 +11,11 @@ const AuthSlice = createSlice({
     initialState,
     reducers:{
        authJWT : (state,action)=>{
-         console.log(action);
           let data={
              id:nanoid(),
              userDetails:action.payload,
           }
-          console.log(data);
+         
           state.userDetails=data
        }
     }

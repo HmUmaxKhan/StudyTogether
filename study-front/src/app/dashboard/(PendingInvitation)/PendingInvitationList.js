@@ -19,15 +19,12 @@ const PendingInvitationsList = () => {
 
   
   let userData = useSelector((state)=>state.pending.pendingInvitations);
-  console.log("PendingList: " ,userData);
 
   let len = userData.length;
 
   userData = userData[len-1];
 
-  if (Array.isArray(userData)) {
-    console.log("Yes it is array",userData); 
-  }
+  
 
   if (!userData || userData.length === 0) {
     return null; // Or you can render a loading indicator or an appropriate component
