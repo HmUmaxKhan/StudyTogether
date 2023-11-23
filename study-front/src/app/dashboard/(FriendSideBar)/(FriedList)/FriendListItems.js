@@ -1,12 +1,21 @@
-
 import Button from "@mui/material/Button";
 import Avatar from "@/app/(shared)/Avatar";
 import Typography from "@mui/material/Typography";
 import OnlineIndicator from "./OnlineIndicator";
+import { useDispatch } from "react-redux";
+import { chatType, setChatDetails } from "@/app/redux/slices/chatdetails";
 
 const FriendsListItem = ({ id, username, isOnline }) => {
+
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(setChatDetails({id:id, name:username,}, chatType.DIRECT))
+  }
+
   return (
     <Button
+    onClick={handleClick}
       style={{
         width: "100%",
         height: "42px",
