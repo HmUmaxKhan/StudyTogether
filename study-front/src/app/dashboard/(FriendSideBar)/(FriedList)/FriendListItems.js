@@ -10,7 +10,14 @@ const FriendsListItem = ({ id, username, isOnline }) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(setChatDetails({id:id, name:username,}, chatType.DIRECT))
+    const chatDetails={
+      id:id,
+      name:username
+    }
+    dispatch(setChatDetails({
+      choosenChatDetails:chatDetails,
+      chatType:chatType.DIRECT
+    }))
   }
 
   return (

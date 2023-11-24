@@ -5,20 +5,23 @@ export const chatType = {
     GROUP:'GROUP'
 }
 
+const initialState = {
+    choosenChatDetails : null,
+    chatType: null,
+    msgs : []
+}
+
 
 const ChatDetailsSlice = createSlice({
     name:"chatDetailsSlice",
-    initialState : {
-        choosenChatDetails : null,
-        chatType: null,
-        msgs : []
-    },
+    initialState,
     reducers:{
        setChatDetails : (state,action)=>{
         console.log("CHAT DETAILS : ",action.payload );
           state.choosenChatDetails = action.payload.choosenChatDetails;
           state.chatType = action.payload.chatType;
           state.msgs = [];
+          console.log("CHAT DETAILS : ",state.choosenChatDetails );
        },
        setMessages : (state,action) => {
         state.msgs = action.payload.msgs;
@@ -26,6 +29,7 @@ const ChatDetailsSlice = createSlice({
        }
     }
 )
+
 
 
 // Exporting actions
