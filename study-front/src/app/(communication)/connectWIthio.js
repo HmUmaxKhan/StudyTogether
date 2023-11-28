@@ -44,3 +44,12 @@ export default function connectWithSocketio(userDetails,dispatch) {
       dispatch(addOnlineUser(OnlineUsers));
     })
 }
+
+export const sendDirectMessage = (data) => {
+  console.log(data);
+  socket.emit("direct-message", data);
+};
+
+// export const getDirectChatHistory = (data) => {
+//   socket.emit("direct-chat-history", data);
+// };

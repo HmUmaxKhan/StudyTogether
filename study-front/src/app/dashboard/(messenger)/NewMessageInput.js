@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "@mui/system";
+import { useSelector } from "react-redux";
+import { sendDirectMessage } from "@/app/(communication)/connectWIthio";
 
 
 const MainContainer = styled("div")({
@@ -21,8 +23,10 @@ const Input = styled("input")({
   padding: "0 10px",
 });
 
-const NewMessageInput = ({ chosenChatDetails }) => {
+const NewMessageInput = () => {
   const [message, setMessage] = useState("");
+
+  const chosenChatDetails = useSelector((state)=>state.chatDetails.choosenChatDetails)
 
   const handleMessageValueChange = (event) => {
     setMessage(event.target.value);
@@ -41,7 +45,10 @@ const NewMessageInput = ({ chosenChatDetails }) => {
         content: message,
       });
       setMessage("");
+      console.log("Message is entered");
     }
+    
+    
   };
 
   return (
